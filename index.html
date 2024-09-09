@@ -1,0 +1,73 @@
+<neu>
+<script src="https://actwu.github.io/neu/n.js"></script>
+<link rel="stylesheet" href="https://purpos.web.app/ui/sen.css">
+
+<body>
+  <cont none>
+    <p>Enter Website URL:</p>
+    <textarea id="urlInput" placeholder="https://example.com"></textarea>
+    <a onmousedown="fetchSource()">Fetch Source</a>
+  </cont>
+
+  <p>Source Code:</p>
+  <cont id="sourceHere" scroll big none></cont>
+
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #sourceHere {
+      white-space: pre-wrap; /* Maintain line breaks */
+      font-family: monospace;
+      height: 300px; /* Set a height for scroll */
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+  </style>
+
+  <script setup>
+    async function fetchSource() {
+      const url = document.getElementById('urlInput').value;
+      const outputArea = document.getElementById('sourceHere');
+      outputArea.innerText = ''; // Clear previous content
+
+      try {
+        const res = await fetch(url);
+        const source = await res.text();
+        displaySourceGroupByGroup(source);
+      } catch (err) {
+        outputArea.innerText = 'Error fetching the source!';
+      }
+    }
+
+    function displaySourceGroupByGroup(source) {
+      const lines = source.split('\n');
+      const groupSize = 5; // Number of lines per group
+      let i = 0;
+      const outputArea = document.getElementById('sourceHere');
+
+      function displayNextGroup() {
+        if (i < lines.length) {
+          const group = lines.slice(i, i + groupSize).join('\n');
+          const newElement = document.createElement('div');
+          newElement.className = 'fade-in';
+          newElement.innerText = group + '\n';
+          outputArea.appendChild(newElement);
+          i += groupSize;
+          setTimeout(displayNextGroup, 100); // 100ms delay between groups
+        }
+      }
+      displayNextGroup();
+    }
+  </script>
+</body>
+</neu>
