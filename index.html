@@ -7,11 +7,11 @@
   setSEO("Source");
 </script>
 <body>
-  <cont none>
-    <p>Enter Website URL:</p>
-    <textarea id="urlInput" placeholder="https://example.com"></textarea>
-    <a onmousedown="fetchSource()">Fetch Source</a>
-  </cont>
+  <cont bottom bar fixed bbg none>
+    
+    <textarea onchange="fetchSource()"
+      id="urlInput" placeholder="https://example.com"></textarea>
+    </cont>
 
   <p>Source Code:</p>
   <cont id="sourceHere" left none></cont>
