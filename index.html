@@ -1,79 +1,97 @@
-
 <setup>
-  ui(); set.view();
-  set.title("Source");
+ui(); set.view(); set.title("Source");
 </setup>
 <script src="https://ise.web.app/load.js"></script>
-
 <body>
-  <cont bottom bar fixed bbg none>
-    
-    <textarea onchange="fetchSource()"
-      id="urlInput" placeholder="https://example.com"></textarea>
-    </cont>
+<warn>This is visible because ise hasn't run yet.</warn>
+<cont bottom bar layer="3" fixed bbg none>
+<textarea oninput="fetchSrc()" id="urlInput" placeholder="https://example.com"></textarea>
+</cont>
 
-  <p>Source Code:</p>
-  <cont id="sourceHere" left none></cont>
-
-  <cont none ></cont>
-  <style>
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    #sourceHere {
-      white-space: pre-wrap; /* Maintain line breaks */
-      font-family: monospace;
-      max-height:max-content;/* Set a height for scroll */
-      overflow-y: auto; /* Enable vertical scrolling */
-    }
-
-    .fade-in {
-      animation: fadeIn 0.5s ease-in-out;
-    }
-
-    
-  </style>
-
-  <script setup>
-    async function fetchSource() {
-      const url = document.getElementById('urlInput').value;
-      const outputArea = document.getElementById('sourceHere');
-      outputArea.innerText = ''; // Clear previous content
-
-      try {
-        const res = await fetch(url);
-        const source = await res.text();
-        displaySourceGroupByGroup(source);
-      } catch (err) {
-        outputArea.innerText = 'Error fetching the source!';
-      }
-    }
-
-    function displaySourceGroupByGroup(source) {
-      const lines = source.split('\n');
-      const groupSize = 5; // Number of lines per group
-      let i = 0;
-      const outputArea = document.getElementById('sourceHere');
-
-      function displayNextGroup() {
-        if (i < lines.length) {
-          const group = lines.slice(i, i + groupSize).join('\n');
-          const newElement = document.createElement('div');
-          newElement.className = 'fade-in';
-          newElement.innerText = group + '\n';
-          outputArea.appendChild(newElement);
-          i += groupSize;
-          setTimeout(displayNextGroup, 100); // 100ms delay between groups
-        }
-      }
-      displayNextGroup();
-    }
-  </script>
+<cont id="srcHere" left none></cont>
+<style>
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+#srcHere { white-space: pre-wrap; font-family: monospace; max-height: max-content; overflow-y: auto; }
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+</style>
+<script setup>
+async function fetchSrc() {
+const url = document.getElementById('urlInput').value;
+const outputArea = document.getElementById('srcHere');
+outputArea.innerText = '';
+try {
+const res = await fetch(url);
+const source = await res.text();
+displaySrcGroupByGroup(source);
+} catch (err) {
+outputArea.innerText = 'Error fetching the source!';
+}
+}
+function displaySrcGroupByGroup(source) {
+const lines = source.split('\n');
+const groupSize = 5;
+let i = 0;
+const outputArea = document.getElementById('srcHere');
+function displayNextGroup() {
+if (i < lines.length) {
+const group = lines.slice(i, i + groupSize).join('\n');
+const newElement = document.createElement('div');
+newElement.className = 'fade-in';
+newElement.innerText = group + '\n';
+outputArea.appendChild(newElement);
+i += groupSize;
+setTimeout(displayNextGroup, 100);
+}
+}
+displayNextGroup();
+}
+</script>
+</body><setup>
+ui(); set.view(); set.title("Source");
+</setup>
+<script src="https://ise.web.app/load.js"></script>
+<body>
+<warn>This is visible because ise hasn't run yet.</warn>
+<cont bottom bar fixed bbg none>
+<textarea oninput="fetchSrc()" id="urlInput" placeholder="https://example.com"></textarea>
+</cont>
+<p>Source Code:</p>
+<cont id="srcHere" left none></cont>
+<style>
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+#srcHere { white-space: pre-wrap; font-family: monospace; max-height: max-content; overflow-y: auto; }
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+</style>
+<script setup>
+async function fetchSrc() {
+const url = document.getElementById('urlInput').value;
+const outputArea = document.getElementById('srcHere');
+outputArea.innerText = '';
+try {
+const res = await fetch(url);
+const source = await res.text();
+displaySrcGroupByGroup(source);
+} catch (err) {
+outputArea.innerText = 'Error fetching the source!';
+}
+}
+function displaySrcGroupByGroup(source) {
+const lines = source.split('\n');
+const groupSize = 5;
+let i = 0;
+const outputArea = document.getElementById('srcHere');
+function displayNextGroup() {
+if (i < lines.length) {
+const group = lines.slice(i, i + groupSize).join('\n');
+const newElement = document.createElement('div');
+newElement.className = 'fade-in';
+newElement.innerText = group + '\n';
+outputArea.appendChild(newElement);
+i += groupSize;
+setTimeout(displayNextGroup, 100);
+}
+}
+displayNextGroup();
+}
+</script>
 </body>
-</neu>
